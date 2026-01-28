@@ -16,9 +16,6 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-os.makedirs("data/raw", exist_ok=True)
-os.makedirs("data/cleaned", exist_ok=True)
-
 
 st.set_page_config(
     page_title="Dakar Auto Scraper",
@@ -182,7 +179,7 @@ class DakarAutoApp:
                     
                     
                     if save_raw:
-                        filename = f"data/raw/{category_keys[category]}_{datetime.now().strftime('%Y%m%d')}.csv"
+                        filename = f"{category_keys[category]}_{datetime.now().strftime('%Y%m%d')}.csv"
                         df.to_csv(filename, index=False)
                         logger.info(f"Données brutes sauvegardées: {filename}")
                 
@@ -202,7 +199,7 @@ class DakarAutoApp:
                 st.session_state.cleaned_data = cleaned_df
                 
                 
-                cleaned_filename = f"data/cleaned/cleaned_{datetime.now().strftime('%Y%m%d_%H%M')}.csv"
+                cleaned_filename = f"cleaned_{datetime.now().strftime('%Y%m%d_%H%M')}.csv"
                 cleaned_df.to_csv(cleaned_filename, index=False)
                 
                 st.success(f" {sum(len(df) for df in scraped_data.values())} annonces scrapées et nettoyées!")
@@ -267,7 +264,7 @@ class DakarAutoApp:
                         st.session_state.cleaned_data = df_clean
                         
                         
-                        filename = f"data/cleaned/webscraper_cleaned_{datetime.now().strftime('%Y%m%d_%H%M')}.csv"
+                        filename = f"webscraper_cleaned_{datetime.now().strftime('%Y%m%d_%H%M')}.csv"
                         df_clean.to_csv(filename, index=False)
                         
                         st.success(f" Données nettoyées: {len(df_clean)} lignes")
@@ -417,4 +414,5 @@ def main():
     app.run()
 
 if __name__ == "__main__":
+
     main()
